@@ -17,6 +17,8 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by cretin on 16/10/27.
@@ -35,6 +37,15 @@ public abstract class BaseActivity extends ParentActivity {
 
     private RelativeLayout relaLoadContainer;
     private TextView tvLoadingMsg;
+
+    private CompositeSubscription mCompositeSubscription;
+
+    protected void addSubscription(Subscription s) {
+        if (this.mCompositeSubscription == null) {
+            this.mCompositeSubscription = new CompositeSubscription();
+        }
+        this.mCompositeSubscription.add(s);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,5 +253,9 @@ public abstract class BaseActivity extends ParentActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
+        if (this.mCompositeSubscription != null) {
+            this.mCompositeSubscription.unsubscribe();
+        }
+
     }
 }

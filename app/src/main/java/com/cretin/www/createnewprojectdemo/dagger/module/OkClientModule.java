@@ -2,6 +2,8 @@ package com.cretin.www.createnewprojectdemo.dagger.module;
 
 import android.text.TextUtils;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +29,7 @@ public class OkClientModule {
         OkHttpClient okClient = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
+                .addNetworkInterceptor(new StethoInterceptor())
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {

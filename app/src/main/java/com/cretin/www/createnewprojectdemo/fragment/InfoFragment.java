@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.cretin.www.createnewprojectdemo.R;
 import com.cretin.www.createnewprojectdemo.base.BaseFragment;
-import com.cretin.www.createnewprojectdemo.dagger.DaggerUtils;
+import com.cretin.www.createnewprojectdemo.dagger.RetrofitUtil;
 import com.cretin.www.createnewprojectdemo.model.InfoModel;
 import com.cretin.www.createnewprojectdemo.model.ResultModel;
 import com.cretin.www.createnewprojectdemo.retrofitapi.InfoService;
@@ -44,7 +44,7 @@ public class InfoFragment extends BaseFragment {
     @OnClick(R.id.tv_show)
     public void onClick() {
         showProgressView();
-        DaggerUtils.getRetrofitServices(InfoService.class).getInfo().enqueue(new ResultCall<ResultModel<InfoModel>>() {
+        RetrofitUtil.getRetrofitServices(InfoService.class).getInfo().enqueue(new ResultCall<ResultModel<InfoModel>>() {
             @Override
             protected void onResponse(Response<ResultModel<InfoModel>> response) {
                 tvShow.setText(response.body().getData().getNew_list().get(0).getImg());

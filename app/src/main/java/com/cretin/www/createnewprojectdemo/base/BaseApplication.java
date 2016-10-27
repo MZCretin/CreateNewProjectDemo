@@ -3,6 +3,7 @@ package com.cretin.www.createnewprojectdemo.base;
 import android.app.Application;
 import android.os.Handler;
 
+import com.facebook.stetho.Stetho;
 import com.orhanobut.hawk.Hawk;
 import com.orhanobut.hawk.HawkBuilder;
 import com.orhanobut.hawk.LogLevel;
@@ -23,6 +24,8 @@ public class BaseApplication extends Application{
         application = this;
         mainTid = android.os.Process.myTid();
         handler = new Handler();
+
+        Stetho.initializeWithDefaults(this);
 
         //初始化Hawk
         initHawk();
