@@ -20,4 +20,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="打开" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="点击获取数据测试在Activity中测试用Retrofit + Dagger获取网络数据 返回的数据将显示在TextView上 \n\n点击打开进入到一个新的Activity，里面包含一个Fragment" />
+
 </LinearLayout>

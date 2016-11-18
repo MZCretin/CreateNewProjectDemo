@@ -1,6 +1,7 @@
 package com.cretin.www.createnewprojectdemo.ui;
 
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.cretin.www.createnewprojectdemo.manager.MainActivityManager;
 import com.cretin.www.createnewprojectdemo.model.InfoModel;
 import com.cretin.www.createnewprojectdemo.model.ResultModel;
 import com.cretin.www.createnewprojectdemo.retrofitapi.InfoService;
+import com.cretin.www.createnewprojectdemo.utils.UiUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -64,5 +66,23 @@ public class MainActivity extends BaseActivity {
                 mActivity.startActivity(intent);
                 break;
         }
+    }
+
+    private long lastBackTime;
+
+    //在需要监听的activity中重写onKeyDown()。
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK
+                && event.getRepeatCount() == 0) {
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastBackTime > 1 * 1000) {
+                lastBackTime = currentTime;
+                UiUtils.showToastInAnyThread("再按一次退出程序");
+            } else {
+                MainActivity.this.finish();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

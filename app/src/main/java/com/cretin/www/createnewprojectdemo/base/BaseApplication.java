@@ -44,4 +44,11 @@ public class BaseApplication extends Application{
         return application;
     }
 
+    public static int getMainTid() {
+        return mainTid;
+    }
+
+    public static Handler getHandler() {
+        return handler;
+    }
 }
