@@ -38,10 +38,12 @@ public abstract class BaseActivity extends ParentActivity {
     private RelativeLayout relaLoadContainer;
     private TextView tvLoadingMsg;
 
+    private ImageView ivBack;
+
     private CompositeSubscription mCompositeSubscription;
 
     protected void addSubscription(Subscription s) {
-        if (this.mCompositeSubscription == null) {
+        if ( this.mCompositeSubscription == null ) {
             this.mCompositeSubscription = new CompositeSubscription();
         }
         this.mCompositeSubscription.add(s);
@@ -54,7 +56,7 @@ public abstract class BaseActivity extends ParentActivity {
         setContentView(view);
         initHeadView(view);
         initContentView(view);
-        if (isKitkat) {
+        if ( isKitkat ) {
             view.findViewById(R.id.ll_main_title).setPadding(0, ViewUtils.getStatusBarHeights(), 0, 0);
         }
         initData();
@@ -64,12 +66,12 @@ public abstract class BaseActivity extends ParentActivity {
     private AnimationDrawable animationDrawable;
 
     private void initContentView(View view) {
-        RelativeLayout container = (RelativeLayout) view.findViewById(R.id.main_container);
-        relaLoadContainer = (RelativeLayout) view.findViewById(R.id.load_container);
-        tvLoadingMsg = (TextView) view.findViewById(R.id.loading_msg);
-        ImageView imageView = (ImageView) view
+        RelativeLayout container = ( RelativeLayout ) view.findViewById(R.id.main_container);
+        relaLoadContainer = ( RelativeLayout ) view.findViewById(R.id.load_container);
+        tvLoadingMsg = ( TextView ) view.findViewById(R.id.loading_msg);
+        ImageView imageView = ( ImageView ) view
                 .findViewById(R.id.loading_image);
-        animationDrawable = (AnimationDrawable) imageView
+        animationDrawable = ( AnimationDrawable ) imageView
                 .getBackground();
         animationDrawable.start();
         View v = getLayoutInflater().inflate(getContentViewId(), null);
@@ -99,55 +101,62 @@ public abstract class BaseActivity extends ParentActivity {
 
     //隐藏正在加载视图
     public void hidProgressView() {
-        if (relaLoadContainer != null)
+        if ( relaLoadContainer != null )
             relaLoadContainer.setVisibility(View.GONE);
-        if (animationDrawable != null)
+        if ( animationDrawable != null )
             animationDrawable.stop();
     }
 
     //显示正在加载视图
     public void showProgressView() {
-        if (relaLoadContainer != null && relaLoadContainer.getVisibility() == View.GONE)
+        if ( relaLoadContainer != null && relaLoadContainer.getVisibility() == View.GONE )
             relaLoadContainer.setVisibility(View.VISIBLE);
-        if (animationDrawable != null)
+        if ( animationDrawable != null )
             animationDrawable.start();
     }
 
+    //隐藏返回按钮
+    public void hidBackIv() {
+        if ( ivBack != null && ivBack.getVisibility() == View.VISIBLE )
+            ivBack.setVisibility(View.GONE);
+    }
+
+
     //显示加载错误
     public void showErrorView() {
-        if (relaLoadContainer != null && relaLoadContainer.getVisibility() == View.GONE)
+        if ( relaLoadContainer != null && relaLoadContainer.getVisibility() == View.GONE )
             relaLoadContainer.setVisibility(View.VISIBLE);
-        if (animationDrawable != null)
+        if ( animationDrawable != null )
             animationDrawable.stop();
         tvLoadingMsg.setText("加载错误");
     }
 
     //初始化头部视图
     private void initHeadView(View view) {
-        tvMainTitle = (TextView) view.findViewById(R.id.tv_title_info);
-        ivMainBack = (ImageView) view.findViewById(R.id.iv_back);
-        ivMainRight = (ImageView) view.findViewById(R.id.iv_right);
-        tvMainRight = (TextView) view.findViewById(R.id.tv_right);
-
+        tvMainTitle = ( TextView ) view.findViewById(R.id.tv_title_info);
+        ivMainBack = ( ImageView ) view.findViewById(R.id.iv_back);
+        ivMainRight = ( ImageView ) view.findViewById(R.id.iv_right);
+        tvMainRight = ( TextView ) view.findViewById(R.id.tv_right);
+        ivBack = ( ImageView ) view.findViewById(R.id.iv_back);
         ivMainBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
-                if (onTitleAreaCliclkListener != null)
+                if ( onTitleAreaCliclkListener != null )
                     onTitleAreaCliclkListener.onTitleAreaClickListener(v);
             }
         });
         ivMainRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onTitleAreaCliclkListener != null)
+                if ( onTitleAreaCliclkListener != null )
                     onTitleAreaCliclkListener.onTitleAreaClickListener(v);
             }
         });
         tvMainRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onTitleAreaCliclkListener != null)
+                if ( onTitleAreaCliclkListener != null )
                     onTitleAreaCliclkListener.onTitleAreaClickListener(v);
             }
         });
@@ -159,9 +168,9 @@ public abstract class BaseActivity extends ParentActivity {
      * @param msg
      */
     public void showDialog(String msg) {
-        if (dialog == null) {
+        if ( dialog == null ) {
             dialog = CustomProgressDialog.createDialog(this);
-            if (msg != null && !msg.equals("")) {
+            if ( msg != null && !msg.equals("") ) {
                 dialog.setMessage(msg);
             }
         }
@@ -172,7 +181,7 @@ public abstract class BaseActivity extends ParentActivity {
      * 关闭对话框
      */
     public void stopDialog() {
-        if (dialog != null && dialog.isShowing()) {
+        if ( dialog != null && dialog.isShowing() ) {
             dialog.dismiss();
         }
     }
@@ -183,13 +192,13 @@ public abstract class BaseActivity extends ParentActivity {
 
     //设置Title
     protected void setMainTitle(String title) {
-        if (!TextUtils.isEmpty(title))
+        if ( !TextUtils.isEmpty(title) )
             tvMainTitle.setText(title);
     }
 
     //设置TitleColor
     protected void setMainTitleColor(String titleColor) {
-        if (!TextUtils.isEmpty(titleColor))
+        if ( !TextUtils.isEmpty(titleColor) )
             setMainTitleColor(Color.parseColor(titleColor));
     }
 
@@ -205,7 +214,7 @@ public abstract class BaseActivity extends ParentActivity {
 
     //设置右边TextView颜色
     protected void setMainTitleRightColor(String tvRightColor) {
-        if (!TextUtils.isEmpty(tvRightColor))
+        if ( !TextUtils.isEmpty(tvRightColor) )
             setMainTitleRightColor(Color.parseColor(tvRightColor));
     }
 
@@ -216,8 +225,8 @@ public abstract class BaseActivity extends ParentActivity {
 
     //设置右边TextView内容
     protected void setMainTitleRightContent(String content) {
-        if (!TextUtils.isEmpty(content)) {
-            if (tvMainRight.getVisibility() == View.GONE)
+        if ( !TextUtils.isEmpty(content) ) {
+            if ( tvMainRight.getVisibility() == View.GONE )
                 tvMainRight.setVisibility(View.VISIBLE);
             tvMainRight.setText(content);
         }
@@ -225,14 +234,14 @@ public abstract class BaseActivity extends ParentActivity {
 
     //设置左边ImageView资源
     protected void setMainLeftIvRes(int res) {
-        if (ivMainBack.getVisibility() == View.GONE)
+        if ( ivMainBack.getVisibility() == View.GONE )
             ivMainBack.setVisibility(View.VISIBLE);
         ivMainBack.setImageResource(res);
     }
 
     //设置又边ImageView资源
     protected void setMainRightIvRes(int res) {
-        if (ivMainRight.getVisibility() == View.GONE)
+        if ( ivMainRight.getVisibility() == View.GONE )
             ivMainRight.setVisibility(View.VISIBLE);
         ivMainRight.setImageResource(res);
     }
@@ -253,7 +262,7 @@ public abstract class BaseActivity extends ParentActivity {
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        if (this.mCompositeSubscription != null) {
+        if ( this.mCompositeSubscription != null ) {
             this.mCompositeSubscription.unsubscribe();
         }
 

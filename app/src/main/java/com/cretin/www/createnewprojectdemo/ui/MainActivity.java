@@ -30,6 +30,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView(View v) {
         hidProgressView();
+        hidBackIv();
     }
 
     @Override
@@ -41,7 +42,6 @@ public class MainActivity extends BaseActivity {
     protected int getContentViewId() {
         return R.layout.activity_main;
     }
-
 
     @OnClick({R.id.tv_show, R.id.tv_open})
     public void onClick(View view) {

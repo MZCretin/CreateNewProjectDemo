@@ -23,7 +23,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:clickable="true"
-                tools:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/arrow_left"/>
 
             <TextView
                 android:id="@+id/tv_title_info"
