@@ -2,6 +2,8 @@ package com.cretin.www.createnewprojectdemo.dagger.module;
 
 import android.text.TextUtils;
 
+import com.cretin.www.createnewprojectdemo.base.BaseApplication;
+import com.cretin.www.createnewprojectdemo.utils.CookiesManager;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.IOException;
@@ -21,15 +23,18 @@ import okhttp3.Response;
  */
 @Module
 public class OkClientModule {
+    private static CookiesManager cookiesManager;
 
     @Provides
     @Singleton
-    OkHttpClient provideOkClient() {
+    public static synchronized OkHttpClient provideOkClient() {
+        cookiesManager = new CookiesManager(BaseApplication.getApp());
         // 定义interceptor
         OkHttpClient okClient = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .addNetworkInterceptor(new StethoInterceptor())
+                .cookieJar(cookiesManager)
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
@@ -72,5 +77,11 @@ public class OkClientModule {
                 })
                 .build();
         return okClient;
+    }
+
+    //清楚Cookies
+    public static void removeCookies() {
+        if (cookiesManager != null)
+            cookiesManager.removeCookies();
     }
 }
