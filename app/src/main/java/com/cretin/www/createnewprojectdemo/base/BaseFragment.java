@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -93,7 +94,7 @@ public abstract class BaseFragment extends Fragment {
     }
 
     private void initContentView(View view, Bundle savedInstanceState) {
-        RelativeLayout container = (RelativeLayout) view.findViewById(R.id.main_container);
+        FrameLayout container = (FrameLayout) view.findViewById(R.id.main_container);
         relaLoadContainer = (RelativeLayout) view.findViewById(R.id.load_container);
         tvLoadingMsg = (TextView) view.findViewById(R.id.loading_msg);
         ImageView imageView = (ImageView) view

@@ -15,7 +15,6 @@ import java.util.List;
  * @param <T>
  */
 public abstract class BaseFragmentActivity<T extends Parcelable>  extends ParentActivity{
-
     //传递参数的key intent.putExtra(key, value);
     public static final String ARGS = "args";
     //传递参数的key intent.putExtra(key, value);
@@ -24,7 +23,6 @@ public abstract class BaseFragmentActivity<T extends Parcelable>  extends Parent
     public T args;
     //用来区分寄生哪个Fragment 用Fragment的TAG为其赋值
     public String tag_fragment;
-
     //如果请求一个Fragment需要数据回来 类似startActivityResult
     public Parcelable requestData;
     //布局中Fragment的ID
@@ -62,25 +60,6 @@ public abstract class BaseFragmentActivity<T extends Parcelable>  extends Parent
             finish();
         }
     }
-
-//    //刷新Fragment
-//    public BaseFragmentWithoutData refreshFragment(String tag) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        BaseFragmentWithoutData baseFragment = (BaseFragmentWithData) fragmentManager.findFragmentByTag(tag);
-//        if (baseFragment != null) {
-//            baseFragment.refreshMySelf();
-//        }
-//        return baseFragment;
-//    }
-
-//    //刷新Fragment
-//    public void refreshFragment(String tag, boolean flag) {
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        BaseFragment baseFragment = (BaseFragment) fragmentManager.findFragmentByTag(tag);
-//        if (baseFragment != null) {
-//            baseFragment.refreshMySelf();
-//        }
-//    }
 
     //回到第一个Fragment
     public void backFirstFragment() {

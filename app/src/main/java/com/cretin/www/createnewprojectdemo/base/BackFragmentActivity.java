@@ -29,7 +29,7 @@ public abstract class BackFragmentActivity<T extends Parcelable> extends BaseFra
         if (null == getSupportFragmentManager().getFragments()) {
             BaseFragment firstFragment = getFirstFragment();
             if (null != firstFragment) {
-                addFragment(firstFragment, true, true);
+                addFragment(firstFragment, true, false);
             }
         }
     }
