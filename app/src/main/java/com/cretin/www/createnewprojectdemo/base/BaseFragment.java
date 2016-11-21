@@ -104,7 +104,8 @@ public abstract class BaseFragment extends Fragment {
         animationDrawable.start();
         View v = getActivity().getLayoutInflater().inflate(getLayoutId(), null);
         ButterKnife.bind(this, v);
-        container.addView(v);
+        container.addView(v,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
         initView(v, savedInstanceState);
     }
 

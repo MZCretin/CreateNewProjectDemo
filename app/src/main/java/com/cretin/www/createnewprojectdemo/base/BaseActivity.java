@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -77,7 +78,8 @@ public abstract class BaseActivity extends ParentActivity {
         animationDrawable.start();
         View v = getLayoutInflater().inflate(getContentViewId(), null);
         ButterKnife.bind(this, v);
-        container.addView(v);
+        container.addView(v,new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT));
         initView(v);
     }
 
