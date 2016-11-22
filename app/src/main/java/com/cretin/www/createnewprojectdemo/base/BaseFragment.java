@@ -6,12 +6,13 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -45,6 +46,9 @@ public abstract class BaseFragment extends Fragment {
     private CustomProgressDialog dialog;
     private BaseActivity.OnTitleAreaCliclkListener onTitleAreaCliclkListener;
 
+    private LinearLayout llMainTitle;
+    private View lineDivider;
+
     /**
      * @param inflater
      * @param container
@@ -57,6 +61,13 @@ public abstract class BaseFragment extends Fragment {
         if (((ParentActivity) getActivity()).isKitkat) {
             view.findViewById(R.id.ll_main_title).setPadding(0, ViewUtils.getStatusBarHeights(), 0, 0);
         }
+        //自己消费点击事件 防止事件穿透
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         initHeadView(view);
         initContentView(view, savedInstanceState);
         initData();
@@ -97,6 +108,7 @@ public abstract class BaseFragment extends Fragment {
         FrameLayout container = (FrameLayout) view.findViewById(R.id.main_container);
         relaLoadContainer = (RelativeLayout) view.findViewById(R.id.load_container);
         tvLoadingMsg = (TextView) view.findViewById(R.id.loading_msg);
+        llMainTitle = (LinearLayout) view.findViewById(R.id.ll_main_title);
         ImageView imageView = (ImageView) view
                 .findViewById(R.id.loading_image);
         animationDrawable = (AnimationDrawable) imageView
@@ -113,7 +125,6 @@ public abstract class BaseFragment extends Fragment {
     public abstract class ResultCall<T> implements Callback<T> {
         @Override
         public void onResponse(Call<T> call, Response<T> response) {
-            Log.e("HHHHHHH", "normalGet:" + response.body().toString() + "");
             hidProgressView();
             onResponse(response);
         }
@@ -154,13 +165,34 @@ public abstract class BaseFragment extends Fragment {
         tvLoadingMsg.setText("加载错误");
     }
 
+    //隐藏title栏的分界线
+    public void hidLineDivider() {
+        if ( lineDivider.getVisibility() == View.VISIBLE )
+            lineDivider.setVisibility(View.GONE);
+    }
+
+    //隐藏头部控件
+    public void hidTitleView() {
+        if ( llMainTitle != null )
+            llMainTitle.setVisibility(View.GONE);
+    }
+
+    //设置Title背景色
+    protected void setMainTitleBackground(int color) {
+        llMainTitle.setBackgroundColor(color);
+    }
+
+    public View getHeadView() {
+        return llMainTitle;
+    }
+
     //初始化头部视图
     private void initHeadView(View view) {
         tvMainTitle = (TextView) view.findViewById(R.id.tv_title_info);
         ivMainBack = (ImageView) view.findViewById(R.id.iv_back);
         ivMainRight = (ImageView) view.findViewById(R.id.iv_right);
         tvMainRight = (TextView) view.findViewById(R.id.tv_right);
-
+        lineDivider = view.findViewById(R.id.line_divider);
         ivMainBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
